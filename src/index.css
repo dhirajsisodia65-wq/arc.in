@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  /* Technologies strip */
+  --animate-marquee: marquee 45s linear infinite;
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Aurora background (footer / CTA) */
+  --animate-aurora-1: aurora-1 16s ease-in-out infinite;
+  --animate-aurora-2: aurora-2 20s ease-in-out infinite;
+  --animate-aurora-3: aurora-3 24s ease-in-out infinite;
+  @keyframes aurora-1 {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(12%, 10%, 0) scale(1.2); }
+  }
+  @keyframes aurora-2 {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1.1); }
+    50% { transform: translate3d(-14%, -8%, 0) scale(0.9); }
+  }
+  @keyframes aurora-3 {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(8%, -12%, 0) scale(1.25); }
+  }
+}
+
+/* Glare Hover: add class "glare-hover" to the wrapper div around an image */
+.glare-hover {
+  position: relative;
+  overflow: hidden;
+}
+.glare-hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    -45deg,
+    transparent 60%,
+    rgba(255, 255, 255, 0.55) 70%,
+    transparent 100%
+  );
+  background-size: 250% 250%;
+  background-position: -100% -100%;
+  background-repeat: no-repeat;
+  transition: background-position 0.8s ease;
+}
+.glare-hover:hover::after {
+  background-position: 100% 100%;
+}
+
+/* ---------- Navbar polish ---------- */
+nav {
+  transition: box-shadow 0.35s ease;
+}
+html.is-scrolled nav {
+  box-shadow: 0 10px 30px -12px rgba(12, 9, 80, 0.3);
+}
+/* animated underline on desktop nav links */
+nav a.relative.font-medium {
+  background-image: linear-gradient(#3a36db, #3a36db);
+  background-repeat: no-repeat;
+  background-position: 50% calc(100% - 2px);
+  background-size: 0% 2px;
+  transition: background-size 0.3s ease, color 0.25s ease;
+}
+nav a.relative.font-medium:hover {
+  background-size: 70% 2px;
+}
+/* shine sweep on Student Login button */
+nav a[href^="/loginportal"] {
+  position: relative;
+  overflow: hidden;
+}
+nav a[href^="/loginportal"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: skewX(-20deg);
+  animation: nav-shine 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes nav-shine {
+  0%, 60% { left: -60%; }
+  100% { left: 130%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  nav a[href^="/loginportal"]::after { animation: none; }
+}
